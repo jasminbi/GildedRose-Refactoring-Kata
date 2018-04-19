@@ -141,6 +141,30 @@ public class GildedRoseShould {
         assertEquals(-2, app.items[0].sellIn);
     }
 
+    //Conjured Item
+
+    @Test
+    public void decrease_quality_of_conjured_items_twice_as_fast() {
+        Item[] items = new Item[] { new Item("Conjured Mana Cake", 10, 5) };
+        GildedRose app = new GildedRose(items);
+
+        app.updateItems();
+
+        assertEquals(3, app.items[0].quality);
+    }
+
+    @Test
+    public void decrease_quality_of_conjured_items_twice_as_fast_after_sellin() {
+        Item[] items = new Item[] { new Item("Conjured Mana Cake", 0, 5) };
+        GildedRose app = new GildedRose(items);
+
+        app.updateItems();
+
+        assertEquals(1, app.items[0].quality);
+    }
+
+
+
 
 
 

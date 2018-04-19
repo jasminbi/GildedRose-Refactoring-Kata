@@ -6,6 +6,7 @@ class GildedRose {
     private static final String AGED_BRIE = "Aged Brie";
     private static final int MAX_QUALITY = 50;
     private static final int MIN_QUALITY = 0;
+    public static final String CONJURED_MANA_CAKE = "Conjured Mana Cake";
 
     Item[] items;
 
@@ -46,9 +47,15 @@ class GildedRose {
                 if (sellByDateHasPassedFor(item)) {
                     item.quality = MIN_QUALITY;
                 }
-
-
                 break;
+            case CONJURED_MANA_CAKE:
+                decreaseQuality(item);
+                if (sellByDateHasPassedFor(item)) {
+                    decreaseQuality(item);
+                }
+
+                // intentional fall through (no break)
+
             default:
                 decreaseQuality(item);
                 if (sellByDateHasPassedFor(item)) {
