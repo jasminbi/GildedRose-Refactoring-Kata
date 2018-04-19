@@ -13,41 +13,50 @@ class GildedRose {
         this.items = items;
     }
 
-    public void updateQuality() {
+    public void updateItems() {
         for (Item item : items) {
-            if (!item.name.equals(AGED_BRIE)
-                    && !item.name.equals(BACKSTAGE_PASSES)) {
-                decreaseQuality(item);
-            } else {
+            updateItem(item);
+        }
+    }
+
+    private void updateItem(Item item) {
+        if (item.name.equals(SULFURAS)) {
+            return;
+        }
+
+        item.sellIn = item.sellIn - 1;
+
+        switch (item.name) {
+            case AGED_BRIE:
                 increaseQuality(item);
-                if (item.name.equals(BACKSTAGE_PASSES)) {
-
-                    if (item.sellIn < 11) {
-                        increaseQuality(item);
-                    }
-
-                    if (item.sellIn < 6) {
-                        increaseQuality(item);
-                    }
-
-                }
-            }
-
-            if (!item.name.equals(SULFURAS)) {
-                item.sellIn = item.sellIn - 1;
-            }
-
-            if (sellByDateHasPassedFor(item)) {
-                if (!item.name.equals(AGED_BRIE)) {
-                    if (!item.name.equals(BACKSTAGE_PASSES)) {
-                        decreaseQuality(item);
-                    } else {
-                        item.quality = MIN_QUALITY;
-                    }
-                } else {
+                if (sellByDateHasPassedFor(item)) {
                     increaseQuality(item);
                 }
-            }
+                break;
+            case BACKSTAGE_PASSES:
+                increaseQuality(item);
+                if (item.sellIn < 10) {
+                    increaseQuality(item);
+                }
+
+                if (item.sellIn < 5) {
+                    increaseQuality(item);
+                }
+
+                if (sellByDateHasPassedFor(item)) {
+                    item.quality = MIN_QUALITY;
+                }
+
+
+                break;
+            default:
+                decreaseQuality(item);
+                if (sellByDateHasPassedFor(item)) {
+
+                    decreaseQuality(item);
+
+                }
+                break;
         }
     }
 
