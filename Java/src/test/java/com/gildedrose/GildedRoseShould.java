@@ -131,6 +131,18 @@ public class GildedRoseShould {
         assertEquals(0, app.items[0].quality);
     }
 
+    @Test
+    public void reduce_sellin_date_past_0() {
+        Item[] items = new Item[] { new Item("Aged Brie", -1, 5) };
+        GildedRose app = new GildedRose(items);
+
+        app.updateQuality();
+
+        assertEquals(-2, app.items[0].sellIn);
+    }
+
+
+
 
 
 
